@@ -1,0 +1,12 @@
+.Filters {
+  width: 150px;
+  margin: 10px auto;
+  margin-bottom: 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.Filters * {
+  margin: auto 6px;
+}

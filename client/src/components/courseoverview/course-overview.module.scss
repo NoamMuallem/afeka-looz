@@ -1,0 +1,22 @@
+.List {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.Headline {
+  width: 750px;
+  margin: 10px auto;
+  // course name headline
+  color: #1ac2cb;
+  font-size: 40px;
+  margin: auto auto;
+  display: grid;
+  grid-template-columns: auto 60px;
+}
+
+.FilterHeadline {
+  margin: 10px auto;
+  font-size: 20px;
+}

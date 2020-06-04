@@ -1,0 +1,55 @@
+.Course {
+  padding-top: 4px;
+  width: 750px;
+  margin: 6px auto;
+  // table background color
+  background-color: #2b3e55;
+  border-radius: 10px;
+  font-weight: 800;
+  * {
+    // table text content color
+    color: #f0f0f0;
+  }
+}
+
+.Headers {
+  width: 750px;
+  //table headers colors
+  color: #f0f0f0;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 360px 320px;
+}
+
+.HeadersRight {
+  display: grid;
+  grid-template-columns: 175px 115px 85px;
+  font-weight: 500;
+}
+
+.HeadersLeft {
+  display: grid;
+  grid-template-columns: 200px 60px 30px 90px;
+  font-weight: 500;
+}
+
+.Headers * {
+  text-align: center;
+}
+
+.HeadlineContainer {
+  width: 740px;
+  margin: 15px auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.Headline {
+  // semester text
+  color: #fc5185;
+  text-align: right;
+  font-size: 30px;
+  font-weight: 400;
+  width: 200px;
+}

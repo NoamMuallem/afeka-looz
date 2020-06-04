@@ -1,0 +1,33 @@
+.Links {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-row-gap: 10px;
+  grid-column-gap: 10px;
+  padding: 4px 0px;
+  border-radius: 15px;
+  background-color: #2b3e55;
+}
+
+.Links * {
+  margin: 10px 20px;
+}
+
+.Container {
+  height: 30vh;
+  margin: 50px auto;
+}
+
+.Links {
+  margin: 30px auto;
+}
+
+.Input {
+  margin: 50px auto;
+  padding: 50px auto;
+}
+
+.HeadLine {
+  margin: 25px auto;
+  padding: 25px auto;
+}
