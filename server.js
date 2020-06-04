@@ -1,3 +1,4 @@
+const path = require("path");
 //my tools for getting and proccessing data
 const scrape = require("./src/utils/data-scrapper");
 const sort = require("./src/utils/sort-lectures");
@@ -27,6 +28,10 @@ app.get("/courses/:id", async (req, res) => {
 if (process.env.NODE_ENV === "production") {
   //set static folder
   app.use(express.static("client/build"));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.relative(__dirname, "client", "build", "index.html"));
+  });
 }
 
 const server = app.listen(port, () => {
