@@ -27,7 +27,7 @@ const scrape = async (courseNumber) => {
   await page
     .waitForXPath(
       "/html/body/div[3]/div[3]/div/div/form/table/tbody/tr[2]/td/div[2]",
-      { timeout: 4000 }
+      { timeout: 8000 }
     )
     .then(async () => {
       //get data

@@ -37,4 +37,4 @@ if (process.env.NODE_ENV === "production") {
 const server = app.listen(port, () => {
   console.log(`server is up on port ` + port);
 });
-server.setTimeout(600000);
+server.setTimeout(900000);
