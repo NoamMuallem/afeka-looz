@@ -8,7 +8,7 @@ const Header = () => {
       <Navbar
         style={{
           width: "100vw",
-          minWidth: "750px",
+          minWidth: "790px",
         }}
         bg="dark"
         variant="dark"

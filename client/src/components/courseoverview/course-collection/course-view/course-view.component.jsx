@@ -3,14 +3,19 @@ import classes from "./course-view.module.scss";
 
 const CourseView = ({ option }) => {
   let count = 0;
+
   return option.map((event) => {
+    let fyi = () => {
+      return event.fyi ? (
+        <span style={{ color: "red" }} className={classes.Warning}>
+          {event.fyi}
+        </span>
+      ) : null;
+    };
+
     return (
       <div key={event.groupId}>
-        {event.fyi ? (
-          <span style={{ color: "red" }} className={classes.Warning}>
-            {event.fyi}
-          </span>
-        ) : null}
+        {fyi()}
         <div className={classes.Container}>
           {event.parts.length === 1 ? null : (
             <div className={classes.LeftBottom}>
