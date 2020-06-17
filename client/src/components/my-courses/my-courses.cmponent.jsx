@@ -2,14 +2,15 @@ import React from "react";
 import classes from "./my-courses.module.scss";
 import CartCourse from "./cart-curse/cart-course.component";
 import { Button } from "react-bootstrap";
+//excel utils
+import { courseToJson } from "../../utils/json-data";
+import { excelBuilder } from "../../utils/excel-builder";
 
-const MyCourses = ({
-  courses,
-  checked,
-  changeNewCourse,
-  deleteCourse,
-  excel,
-}) => {
+const MyCourses = ({ courses, setNewCourse, deleteCourse, excel }) => {
+  const createExcelFile = () => {
+    excelBuilder(courseToJson(courses));
+  };
+
   return (
     <div className={classes.Container}>
       {courses.length === 0 ? (
@@ -18,7 +19,7 @@ const MyCourses = ({
         <Button
           style={{ maxWidth: "90px", marginBottom: "16px" }}
           size="lg"
-          onClick={() => excel()}
+          onClick={() => createExcelFile()}
           variant="success"
         >
           הורדה
@@ -28,9 +29,8 @@ const MyCourses = ({
         {courses.map((course) => (
           <CartCourse
             key={course.courseNumber}
-            checked={checked}
             course={course}
-            changeNewCourse={changeNewCourse}
+            setNewCourse={setNewCourse}
             deleteCourse={() => deleteCourse(course.courseNumber)}
           />
         ))}

@@ -2,7 +2,7 @@ import React from "react";
 import classes from "./cart-course.module.scss";
 import { Button } from "react-bootstrap";
 
-const CartCourse = ({ course, changeNewCourse, deleteCourse }) => {
+const CartCourse = ({ course, setNewCourse, deleteCourse }) => {
   return (
     <div className={classes.Container}>
       <div className={classes.Semesters}>
@@ -16,7 +16,7 @@ const CartCourse = ({ course, changeNewCourse, deleteCourse }) => {
           size="sm"
           variant="outline-light"
           onClick={() => {
-            changeNewCourse(course.courseNumber);
+            setNewCourse(course.courseNumber);
           }}
         >
           ערוך

@@ -13,12 +13,9 @@ import NotFound from "./components/not-found/not-found.component";
 import Homepage from "./components/home-page/home-page.component";
 //funcionality
 import axios from "axios";
-//excel utils
-import { courseToJson } from "./utils/json-data";
-import { excelBuilder } from "./utils/excel-builder";
 
 //todo
-//change logo and title of app
+//change logo of app
 //animation
 
 class App extends Component {
@@ -36,30 +33,6 @@ class App extends Component {
       },
     };
   }
-
-  canSave = () => {
-    //look for new course in myCourses
-    const matchIndex = this.state.myCourses.findIndex(
-      (course) => course.courseNumber === this.state.newCourse.courseNumber
-    );
-    if (matchIndex !== -1) {
-      if (
-        (this.state.myCourses[matchIndex].a !== this.state.newCourse.a) |
-        (this.state.myCourses[matchIndex].b !== this.state.newCourse.b) |
-        (this.state.myCourses[matchIndex].c !== this.state.newCourse.c)
-      ) {
-        return "שמור שינויים";
-      } else {
-        return null;
-      }
-    } else {
-      return "הוסף לקורסים שלי";
-    }
-  };
-
-  createExcelFile = () => {
-    excelBuilder(courseToJson(this.state.myCourses));
-  };
 
   searchCourse = (courseNumber) => {
     //searching for an existing copy of the cours:
@@ -109,24 +82,6 @@ class App extends Component {
     }
   };
 
-  checked = (semesterFilter, inputCourse) => {
-    //get a copy of the original courses
-    let courses = this.state.myCourses;
-    //find index of course
-    let matchIndex = courses.findIndex((course) => {
-      return course.courseNumber === inputCourse.courseNumber;
-    });
-    if (matchIndex !== -1) {
-      //look for the corresponding course
-      let course = courses[matchIndex];
-      this.setState({ newCourse: course });
-    }
-    let coppy = this.state.newCourse;
-    coppy = { ...coppy, [semesterFilter]: !coppy[semesterFilter] };
-
-    this.setState({ newCourse: coppy });
-  };
-
   updateCourses = (updateCourse) => {
     //takes newCourse or update flters on existing course
     //search for another course with that same course number
@@ -146,7 +101,7 @@ class App extends Component {
     this.setState({ myCourses: coppyMyCourses });
   };
 
-  changeNewCourse = (courseNumber) => {
+  setNewCourse = (courseNumber) => {
     const matchIndex = this.state.myCourses.findIndex(
       (myCourse) => myCourse.courseNumber === courseNumber
     );
@@ -174,9 +129,6 @@ class App extends Component {
           render={() => (
             <AddCourse
               searchCourse={this.searchCourse}
-              checked={this.checked}
-              save={this.updateCourses}
-              newCourse={this.state.newCourse}
               loading={this.state.loading}
             />
           )}
@@ -185,11 +137,9 @@ class App extends Component {
           path="/myCourses"
           render={() => (
             <MyCourses
-              checked={this.checked}
               courses={this.state.myCourses}
-              changeNewCourse={this.changeNewCourse}
+              setNewCourse={this.setNewCourse}
               deleteCourse={this.deleteCourse}
-              excel={this.createExcelFile}
             />
           )}
         />
@@ -197,10 +147,9 @@ class App extends Component {
           path="/display"
           render={() => (
             <CourseOverview
+              courses={this.state.myCourses}
               data={this.state.newCourse}
               save={this.updateCourses}
-              checked={this.checked}
-              canSave={this.canSave}
             />
           )}
         />
