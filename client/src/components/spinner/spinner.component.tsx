@@ -2,7 +2,11 @@ import React from "react";
 import { css } from "@emotion/core";
 import HashLoader from "react-spinners/HashLoader";
 
-const MySpinner = ({ loading }) => {
+interface Props {
+  loading: boolean;
+}
+
+const MySpinner: React.FC<Props> = ({ loading }) => {
   const override = css`
     position: fixed;
     top: 35%;

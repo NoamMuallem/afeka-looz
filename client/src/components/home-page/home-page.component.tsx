@@ -2,7 +2,7 @@ import React from "react";
 import classes from "./home-page.module.scss";
 import FontAwesome from "react-fontawesome";
 
-const Homepage = () => {
+const Homepage: React.FC = () => {
   return (
     <div className={classes.Homapage}>
       <h1 style={{ color: "#43dde6" }}>הורדת אקסל של קורסים באפקה</h1>

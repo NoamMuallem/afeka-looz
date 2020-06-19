@@ -2,7 +2,12 @@ import React from "react";
 import classes from "./add-course.module.scss";
 import MyInput from "../text-input/text-input.component";
 
-const AddCourse = ({ searchCourse, loading }) => {
+interface Props {
+  searchCourse: (courseNumber: string) => void;
+  loading: boolean;
+}
+
+const AddCourse: React.FC<Props> = ({ searchCourse, loading }) => {
   return (
     <div className={classes.Container}>
       <div>

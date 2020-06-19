@@ -1,9 +1,11 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import FontAwesome from "react-fontawesome";
 
-const BackButton = ({ history }) => {
+interface Props extends RouteComponentProps<any> {}
+
+const BackButton: React.FC<Props> = ({ history }) => {
   return (
     <Button
       style={{

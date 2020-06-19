@@ -1,7 +1,14 @@
 import React from "react";
 import { Form } from "react-bootstrap";
 
-const MyCheckbox = ({ str, click, checked, disp }) => {
+interface Props {
+  str: string;
+  click: () => void;
+  checked: boolean;
+  disp: boolean;
+}
+
+const MyCheckbox: React.FC<Props> = ({ str, click, checked, disp }) => {
   return (
     <Form.Check
       checked={checked}

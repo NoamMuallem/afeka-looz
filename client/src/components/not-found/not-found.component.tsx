@@ -2,7 +2,11 @@ import React from "react";
 import classes from "./not-found.module.scss";
 import BackButton from "../back-button/back-button.component";
 
-const NotFound = ({ courseNumber }) => {
+interface Props {
+  courseNumber: string;
+}
+
+const NotFound: React.FC<Props> = ({ courseNumber }) => {
   return (
     <div className={classes.Error}>
       <span className={classes.ButtonContainer}>

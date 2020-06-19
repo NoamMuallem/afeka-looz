@@ -1,7 +1,12 @@
 import React from "react";
 import { InputGroup, FormControl, Button } from "react-bootstrap";
 
-const MyTextInput = ({ click, loading }) => {
+interface Props {
+  click: (number: string) => void;
+  loading: boolean;
+}
+
+const MyTextInput: React.FC<Props> = ({ click, loading }) => {
   let number = "";
   return (
     <InputGroup

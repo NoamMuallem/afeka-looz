@@ -1,8 +1,19 @@
 import React from "react";
 import classes from "./cart-course.module.scss";
 import { Button } from "react-bootstrap";
+import { Course } from "../../../utils/course-interface";
 
-const CartCourse = ({ course, setNewCourse, deleteCourse }) => {
+interface Props {
+  course: Course;
+  setNewCourse: () => void;
+  deleteCourse: () => void;
+}
+
+const CartCourse: React.FC<Props> = ({
+  course,
+  setNewCourse,
+  deleteCourse,
+}) => {
   return (
     <div className={classes.Container}>
       <div className={classes.Semesters}>
@@ -10,15 +21,9 @@ const CartCourse = ({ course, setNewCourse, deleteCourse }) => {
         <span>{course.b ? " ב " : "   "}</span>
         <span>{course.c ? "קיץ" : "   "}</span>
       </div>
-      <div className={classes.Name}>{course.data.name}</div>
+      <div className={classes.Name}>{course.data!.name}</div>
       <div className={classes.Buttons}>
-        <Button
-          size="sm"
-          variant="outline-light"
-          onClick={() => {
-            setNewCourse(course.courseNumber);
-          }}
-        >
+        <Button size="sm" variant="outline-light" onClick={setNewCourse}>
           ערוך
         </Button>
         <Button size="sm" onClick={deleteCourse} variant="outline-danger">

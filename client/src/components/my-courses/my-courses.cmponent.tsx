@@ -5,8 +5,19 @@ import { Button } from "react-bootstrap";
 //excel utils
 import { courseToJson } from "../../utils/json-data";
 import { excelBuilder } from "../../utils/excel-builder";
+import { Course } from "../../utils/course-interface";
 
-const MyCourses = ({ courses, setNewCourse, deleteCourse, excel }) => {
+interface Props {
+  courses: Array<Course>;
+  setNewCourse: (courseNumber: string) => void;
+  deleteCourse: (courseNumber: string) => void;
+}
+
+const MyCourses: React.FC<Props> = ({
+  courses,
+  setNewCourse,
+  deleteCourse,
+}) => {
   const createExcelFile = () => {
     excelBuilder(courseToJson(courses));
   };
@@ -30,7 +41,7 @@ const MyCourses = ({ courses, setNewCourse, deleteCourse, excel }) => {
           <CartCourse
             key={course.courseNumber}
             course={course}
-            setNewCourse={setNewCourse}
+            setNewCourse={() => setNewCourse(course.courseNumber)}
             deleteCourse={() => deleteCourse(course.courseNumber)}
           />
         ))}

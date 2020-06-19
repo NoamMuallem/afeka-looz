@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import "./App.scss";
 //router
-import { Route, withRouter } from "react-router-dom";
+import { Route, withRouter, RouteComponentProps } from "react-router-dom";
 //components and pages
 import Header from "./components/header/header.component";
 import AddCourse from "./components/add-course/add-course.component";
@@ -13,54 +13,74 @@ import NotFound from "./components/not-found/not-found.component";
 import Homepage from "./components/home-page/home-page.component";
 //funcionality
 import axios from "axios";
+//interfaces
+import { Course, Option } from "./utils/course-interface";
 
-//todo
-//change logo of app
-//animation
+interface Props extends RouteComponentProps {}
 
-class App extends Component {
-  constructor(props) {
+interface State {
+  myCourses: Array<Course>;
+  loading: boolean;
+  newCourse: {
+    courseNumber: string;
+    a: { [key: string]: boolean };
+    b: { [key: string]: boolean };
+    c: { [key: string]: boolean };
+    data: null | {
+      name: string;
+      semesterA: Array<Option>;
+      semesterB: Array<Option>;
+      semesterC: Array<Option>;
+    };
+  };
+}
+
+class App extends Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       myCourses: [],
       loading: false,
       newCourse: {
         courseNumber: "",
-        a: true,
-        b: true,
-        c: true,
+        a: { a: true },
+        b: { b: true },
+        c: { c: true },
         data: null,
       },
     };
   }
 
-  searchCourse = (courseNumber) => {
+  searchCourse = (courseNumber: string) => {
     //searching for an existing copy of the cours:
     let matchIndex = this.state.myCourses.findIndex((course) => {
       return course.courseNumber === courseNumber;
     });
     if (matchIndex !== -1) {
-      this.setState({ newCourse: this.state.myCourses[matchIndex] });
+      this.setState({
+        ...this.state,
+        newCourse: { ...this.state.myCourses[matchIndex] },
+      });
       this.props.history.push("/display");
     } else {
       this.setState({ loading: true }, () => {
         axios
           .get(`/courses/${courseNumber}`)
-          .then((result) => {
+          .then((result: any) => {
             //if we got back an empty array the backend script didn't ran, try again
             if (
-              (result.data.length === 0) |
-              ((result.data.semesterA.length === 0) &
-                (result.data.semesterB.length === 0) &
-                (result.data.semesterC.length === 0))
+              result.data.length === 0 ||
+              (result.data.semesterA.length === 0 &&
+                result.data.semesterB.length === 0 &&
+                result.data.semesterC.length === 0)
             ) {
               this.searchCourse(courseNumber);
             } else {
               let course = {
                 courseNumber,
-                a: result.data.semesterA.length > 0,
-                b: result.data.semesterB.length > 0,
-                c: result.data.semesterC.length > 0,
+                a: { a: result.data.semesterA.length > 0 },
+                b: { b: result.data.semesterB.length > 0 },
+                c: { c: result.data.semesterC.length > 0 },
                 data: result.data,
               };
               this.setState({ newCourse: course });
@@ -82,7 +102,7 @@ class App extends Component {
     }
   };
 
-  updateCourses = (updateCourse) => {
+  updateCourses = (updateCourse: Course) => {
     //takes newCourse or update flters on existing course
     //search for another course with that same course number
     let coppyMyCourses = this.state.myCourses;
@@ -101,7 +121,7 @@ class App extends Component {
     this.setState({ myCourses: coppyMyCourses });
   };
 
-  setNewCourse = (courseNumber) => {
+  setNewCourse = (courseNumber: string) => {
     const matchIndex = this.state.myCourses.findIndex(
       (myCourse) => myCourse.courseNumber === courseNumber
     );
@@ -109,7 +129,7 @@ class App extends Component {
     this.props.history.push("/display");
   };
 
-  deleteCourse = (courseNum) => {
+  deleteCourse = (courseNum: string) => {
     const matchIndex = this.state.myCourses.findIndex((myCourse) => {
       return myCourse.courseNumber === courseNum;
     });
@@ -123,7 +143,7 @@ class App extends Component {
       <div className="App">
         <Header />
         <Spinner loading={this.state.loading} />
-        <Route path="/" exact render={Homepage} />
+        <Route path="/" exact render={() => <Homepage />} />
         <Route
           path="/add"
           render={() => (
