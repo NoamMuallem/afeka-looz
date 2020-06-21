@@ -1,6 +1,7 @@
 import React from "react";
 import { css } from "@emotion/core";
 import HashLoader from "react-spinners/HashLoader";
+import { connect } from "react-redux";
 
 interface Props {
   loading: boolean;
@@ -21,4 +22,8 @@ const MySpinner: React.FC<Props> = ({ loading }) => {
   );
 };
 
-export default MySpinner;
+const mapStateToProps = (state: any) => ({
+  loading: state.courses.loading,
+});
+
+export default connect(mapStateToProps)(MySpinner);

@@ -2,31 +2,37 @@ import React from "react";
 import classes from "./cart-course.module.scss";
 import { Button } from "react-bootstrap";
 import { Course } from "../../../utils/course-interface";
+import { connect } from "react-redux";
+import { RouteComponentProps, withRouter } from "react-router-dom";
+import { setNewCourse } from "../../../redux/courses/courses.actions";
 
-interface Props {
+interface Props extends RouteComponentProps {
   course: Course;
-  setNewCourse: () => void;
-  deleteCourse: () => void;
+  delete: () => void;
+  setCourse: (courseNumber: string) => void;
 }
 
-const CartCourse: React.FC<Props> = ({
-  course,
-  setNewCourse,
-  deleteCourse,
-}) => {
+const CartCourse: React.FC<Props> = (props: Props) => {
   return (
     <div className={classes.Container}>
       <div className={classes.Semesters}>
-        <span>{course.a ? " א " : "   "}</span>
-        <span>{course.b ? " ב " : "   "}</span>
-        <span>{course.c ? "קיץ" : "   "}</span>
+        <span>{props.course.filters[0] ? " א " : "   "}</span>
+        <span>{props.course.filters[1] ? " ב " : "   "}</span>
+        <span>{props.course.filters[2] ? "קיץ" : "   "}</span>
       </div>
-      <div className={classes.Name}>{course.data!.name}</div>
+      <div className={classes.Name}>{props.course.data!.name}</div>
       <div className={classes.Buttons}>
-        <Button size="sm" variant="outline-light" onClick={setNewCourse}>
+        <Button
+          size="sm"
+          variant="outline-light"
+          onClick={() => {
+            props.setCourse(props.course.courseNumber);
+            props.history.push("/display");
+          }}
+        >
           ערוך
         </Button>
-        <Button size="sm" onClick={deleteCourse} variant="outline-danger">
+        <Button size="sm" onClick={props.delete} variant="outline-danger">
           מחק
         </Button>
       </div>
@@ -34,4 +40,8 @@ const CartCourse: React.FC<Props> = ({
   );
 };
 
-export default CartCourse;
+const mapDispatchToProps = (dispatch: any) => ({
+  setCourse: (courseNumber: string) => dispatch(setNewCourse(courseNumber)),
+});
+
+export default withRouter(connect(null, mapDispatchToProps)(CartCourse)) as any;

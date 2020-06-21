@@ -1,12 +1,17 @@
 import React from "react";
 import { InputGroup, FormControl, Button } from "react-bootstrap";
+import { searchCourse } from "../../redux/courses/courses.actions";
+import { RouteComponentProps, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { Course } from "../../utils/course-interface";
 
-interface Props {
-  click: (number: string) => void;
+interface Props extends RouteComponentProps {
+  click: (number: string, courses: Array<Course>, ownProps: Props) => void;
+  courses: Array<Course>;
   loading: boolean;
 }
 
-const MyTextInput: React.FC<Props> = ({ click, loading }) => {
+const MyTextInput: React.FC<Props> = (props: Props) => {
   let number = "";
   return (
     <InputGroup
@@ -18,8 +23,11 @@ const MyTextInput: React.FC<Props> = ({ click, loading }) => {
         aria-describedby="basic-addon1"
       />
       <InputGroup.Prepend>
-        {!loading ? (
-          <Button onClick={() => click(number)} variant="outline-light">
+        {!props.loading ? (
+          <Button
+            onClick={() => props.click(number, props.courses, props)}
+            variant="outline-light"
+          >
             חיפוש
           </Button>
         ) : (
@@ -32,4 +40,17 @@ const MyTextInput: React.FC<Props> = ({ click, loading }) => {
   );
 };
 
-export default MyTextInput;
+const mapStateToProps = (state: any) => ({
+  loading: state.courses.loading,
+  courses: state.courses.myCourses,
+});
+
+const mapDispatchToProps = (dispatch: any, ownProps: Props) => ({
+  click: (courseNumber: string, courses: Array<Course>) =>
+    dispatch(searchCourse(courseNumber, courses, ownProps)),
+});
+
+//known issiu when using withRouter and connect together
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(MyTextInput)
+) as any;

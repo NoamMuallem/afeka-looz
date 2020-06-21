@@ -1,8 +1,6 @@
 export interface Course {
   courseNumber: string;
-  a: { [key: string]: boolean };
-  b: { [key: string]: boolean };
-  c: { [key: string]: boolean };
+  filters: Array<boolean>;
   data: null | {
     name: string;
     semesterA: Array<Option>;

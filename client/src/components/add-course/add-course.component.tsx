@@ -2,17 +2,12 @@ import React from "react";
 import classes from "./add-course.module.scss";
 import MyInput from "../text-input/text-input.component";
 
-interface Props {
-  searchCourse: (courseNumber: string) => void;
-  loading: boolean;
-}
-
-const AddCourse: React.FC<Props> = ({ searchCourse, loading }) => {
+const AddCourse: React.FC = () => {
   return (
     <div className={classes.Container}>
       <div>
         <span>הכנס מספר קורס לחיפוש</span>
-        <MyInput loading={loading} click={searchCourse} />
+        <MyInput />
         <span className={classes.HeadLine}>מספרי קורסים</span>
         <div className={classes.Links}>
           <a

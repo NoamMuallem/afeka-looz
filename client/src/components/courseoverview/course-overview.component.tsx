@@ -5,97 +5,96 @@ import Filters from "../filters/filters.component";
 import { Button } from "react-bootstrap";
 import BackButton from "../back-button/back-button.component";
 import { Course } from "../../utils/course-interface";
+import { connect } from "react-redux";
+import {
+  updateCourse,
+  checkboxNewCourse,
+} from "../../redux/courses/courses.actions";
 
-interface Props {
+interface CourseOverviewProps {
+  //courses to see if allready exsists
   courses: Array<Course>;
+  //this spesific course
   data: Course;
+  //save the changes to that course in the state
   save: (course: Course) => void;
+  //for checkbox handling
+  checkbox: (fiter: number, course: Course) => void;
 }
 
-interface State {
-  course: Course;
-}
+export interface CourseOverviewState {}
 
-class CourseOverview extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    if (props.data.data) {
-      this.state = {
-        course: {
-          courseNumber: props.data.courseNumber,
-          a: props.data.a,
-          b: props.data.b,
-          c: props.data.c,
-          data: {
-            name: props.data.data.name,
-            semesterA: props.data.data.semesterA,
-            semesterB: props.data.data.semesterB,
-            semesterC: props.data.data.semesterC,
-          },
-        },
-      };
-    }
-  }
-
-  canSave = () => {
-    //look for (new?) course in courses
+class CourseOverview extends Component<
+  CourseOverviewProps,
+  CourseOverviewState
+> {
+  saveButton = () => {
+    //look for new course in myCourses
     const matchIndex = this.props.courses.findIndex(
-      (course) => course.courseNumber === this.state.course.courseNumber
+      (course) => course.courseNumber === this.props.data.courseNumber
     );
     if (matchIndex !== -1) {
       if (
-        this.props.courses[matchIndex].a !== this.state.course.a ||
-        this.props.courses[matchIndex].b !== this.state.course.b ||
-        this.props.courses[matchIndex].c !== this.state.course.c
+        this.props.courses[matchIndex].filters[0] !==
+          this.props.data.filters[0] ||
+        this.props.courses[matchIndex].filters[1] !==
+          this.props.data.filters[1] ||
+        this.props.courses[matchIndex].filters[2] !== this.props.data.filters[2]
       ) {
-        return "שמור שינויים";
+        return (
+          <Button
+            onClick={() => {
+              this.props.save(this.props.data);
+              this.forceUpdate();
+            }}
+            variant="outline-light"
+          >
+            שמור שינויים
+          </Button>
+        );
       } else {
         return null;
       }
     } else {
-      return "הוסף לקורסים שלי";
+      return (
+        <Button
+          onClick={() => {
+            this.props.save(this.props.data);
+            this.forceUpdate();
+          }}
+          variant="outline-light"
+        >
+          הוסף לקורסים שלי
+        </Button>
+      );
     }
   };
 
-  checked = (semesterFilter: any) => {
-    let coppy = this.state.course;
-    coppy = {
-      ...coppy,
-      [semesterFilter]: !coppy[semesterFilter as keyof typeof coppy],
-    };
-    this.setState({ course: coppy });
+  checkboxHandler = (filter: number, course: Course) => {
+    this.props.checkbox(filter, course);
+    this.forceUpdate();
   };
 
   render() {
-    if (this.state) {
-      const dispSave = this.canSave();
-      //data can't be null if we have state
-      const { a, b, c, data } = this.state.course;
+    const { data, filters } = this.props.data;
+    if (data) {
       return (
         <div>
           <span className={classes.Headline}>
             <span>{data!.name}</span>
             <BackButton />
           </span>
-          {dispSave ? (
-            <Button
-              onClick={() => this.props.save(this.state.course)}
-              variant="outline-light"
-            >
-              {dispSave}
-            </Button>
-          ) : null}
-
+          {this.saveButton()}
           <div className={classes.FilterHeadline}>:סינון סמסטרים</div>
-          <Filters course={this.state.course} checked={this.checked} />
+          <Filters checked={this.checkboxHandler} />
           <div className={classes.List}>
-            {data!.semesterA.length !== 0 && a ? (
+            {data!.semesterA.length !== 0 && filters[0] ? (
               <CourseCollection str={"סמסטר א"} semester={data!.semesterA} />
             ) : null}
-            {data!.semesterB.length !== 0 && b ? (
+            {data!.semesterB.length !== 0 && filters[1] ? (
               <CourseCollection str={"סמסטר ב"} semester={data!.semesterB} />
             ) : null}
-            {data!.semesterC.length !== 0 && c ? (
+            {data!.semesterC.length !== 0 && filters[2] ? (
               <CourseCollection str={"סמסטר קיץ"} semester={data!.semesterC} />
             ) : null}
           </div>
@@ -107,4 +106,14 @@ class CourseOverview extends Component<Props, State> {
   }
 }
 
-export default CourseOverview;
+const mapStateToProps = (state: any) => ({
+  data: state.courses.newCourse,
+  courses: state.courses.myCourses,
+});
+
+const mapDispatchToProps = (dispatch: any) => ({
+  save: (course: Course) => dispatch(updateCourse(course)),
+  checkbox: (filter: number) => dispatch(checkboxNewCourse(filter)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CourseOverview);

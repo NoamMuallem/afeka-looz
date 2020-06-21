@@ -1,6 +1,7 @@
 import React from "react";
 import classes from "./not-found.module.scss";
 import BackButton from "../back-button/back-button.component";
+import { connect } from "react-redux";
 
 interface Props {
   courseNumber: string;
@@ -18,4 +19,8 @@ const NotFound: React.FC<Props> = ({ courseNumber }) => {
   );
 };
 
-export default NotFound;
+const mapStateToProps = (state: any) => ({
+  courseNumber: state.courses.newCourse.courseNumber,
+});
+
+export default connect(mapStateToProps)(NotFound);
