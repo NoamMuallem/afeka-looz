@@ -1,16 +1,16 @@
 export const courseToJson = (courses) => {
   return courses.map((course) => {
     const name = course.data.name;
-    const courseNumber = course.courseNumber;
-    const { a, b, c } = course;
+    const { courseNumber, filters } = course;
+
     let options = [];
-    if (a) {
+    if (filters[0]) {
       options = options.concat(course.data.semesterA.map((option) => option));
     }
-    if (b) {
+    if (filters[1]) {
       options = options.concat(course.data.semesterB.map((option) => option));
     }
-    if (c) {
+    if (filters[2]) {
       options = options.concat(course.data.semesterC.map((option) => option));
     }
 
