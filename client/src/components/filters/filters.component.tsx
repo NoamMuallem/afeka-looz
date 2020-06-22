@@ -11,34 +11,26 @@ interface Props {
 
 const Filters: React.FC<Props> = ({ checked, course }) => {
   //this component gets rendered ony if data is not null
-  let a = course.filters[0];
-  let b = course.filters[1];
-  let c = course.filters[2];
-  let dispA = course.data!.semesterA.length > 0;
-  let dispB = course.data!.semesterB.length > 0;
-  let dispC = course.data!.semesterC.length > 0;
   return (
-    <div>
-      <div className={classes.Filters}>
-        <MyCheckbox
-          str={"קיץ"}
-          click={() => checked(2, course)}
-          checked={c}
-          disp={dispC}
-        />
-        <MyCheckbox
-          str={"ב"}
-          click={() => checked(1, course)}
-          checked={b}
-          disp={dispB}
-        />
-        <MyCheckbox
-          str={"א"}
-          click={() => checked(0, course)}
-          checked={a}
-          disp={dispA}
-        />
-      </div>
+    <div className={classes.Filters}>
+      <MyCheckbox
+        str={"קיץ"}
+        click={() => checked(2, course)}
+        checked={course.filters[2]}
+        disp={course.data!.semesterC.length > 0}
+      />
+      <MyCheckbox
+        str={"ב"}
+        click={() => checked(1, course)}
+        checked={course.filters[1]}
+        disp={course.data!.semesterB.length > 0}
+      />
+      <MyCheckbox
+        str={"א"}
+        click={() => checked(0, course)}
+        checked={course.filters[0]}
+        disp={course.data!.semesterA.length > 0}
+      />
     </div>
   );
 };

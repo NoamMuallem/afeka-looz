@@ -41,6 +41,7 @@ export const searchCourse = (
   props: any
 ) => {
   return (dispatch: any) => {
+    console.log("entered searchCourse");
     let matchIndex = courses.findIndex(
       (course) => course.courseNumber === courseNumber
     );
@@ -60,7 +61,7 @@ export const searchCourse = (
               result.data.semesterB.length === 0 &&
               result.data.semesterC.length === 0)
           ) {
-            searchCourse(courseNumber, courses, props.history);
+            dispatch(searchCourse(courseNumber, courses, props.history));
           } else {
             let course = {
               courseNumber,

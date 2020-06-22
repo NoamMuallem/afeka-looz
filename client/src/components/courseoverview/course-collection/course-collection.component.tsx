@@ -1,28 +1,11 @@
 import React from "react";
 import CourseView from "./course-view/course-view.component";
 import classes from "./course-collection.module.scss";
+import { Option } from "../../../utils/course-interface";
 
 interface Props {
   str: string;
   semester: Array<Option>;
-}
-
-interface Option extends Array<Lecture> {}
-
-interface Lecture {
-  semester: string;
-  groupId: string;
-  lectureType: string;
-  fyi: string;
-  lecturer: string;
-  parts: Array<Part>;
-}
-
-interface Part {
-  day: string;
-  start: string;
-  ends: string;
-  classRoom: string;
 }
 
 const CourseCollection: React.FC<Props> = ({ str, semester }) => {

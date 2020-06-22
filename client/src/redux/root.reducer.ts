@@ -4,7 +4,7 @@ import storage from "redux-persist/lib/storage";
 
 import courseReducer from "./courses/courses.reducer";
 
-const persistConfif = {
+const persistConfig = {
   key: "root",
   storage,
   whitelist: ["courses"],
@@ -14,4 +14,4 @@ const rootReducer = combineReducers({
   courses: courseReducer,
 });
 
-export default persistReducer(persistConfif, rootReducer);
+export default persistReducer(persistConfig, rootReducer);

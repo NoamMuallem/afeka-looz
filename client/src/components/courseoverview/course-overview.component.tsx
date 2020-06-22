@@ -22,12 +22,7 @@ interface CourseOverviewProps {
   checkbox: (fiter: number, course: Course) => void;
 }
 
-export interface CourseOverviewState {}
-
-class CourseOverview extends Component<
-  CourseOverviewProps,
-  CourseOverviewState
-> {
+class CourseOverview extends Component<CourseOverviewProps> {
   saveButton = () => {
     //look for new course in myCourses
     const matchIndex = this.props.courses.findIndex(
@@ -41,32 +36,12 @@ class CourseOverview extends Component<
           this.props.data.filters[1] ||
         this.props.courses[matchIndex].filters[2] !== this.props.data.filters[2]
       ) {
-        return (
-          <Button
-            onClick={() => {
-              this.props.save(this.props.data);
-              this.forceUpdate();
-            }}
-            variant="outline-light"
-          >
-            שמור שינויים
-          </Button>
-        );
+        return "שמור שינויים";
       } else {
         return null;
       }
     } else {
-      return (
-        <Button
-          onClick={() => {
-            this.props.save(this.props.data);
-            this.forceUpdate();
-          }}
-          variant="outline-light"
-        >
-          הוסף לקורסים שלי
-        </Button>
-      );
+      return "הוסף לקורסים שלי";
     }
   };
 
@@ -76,6 +51,7 @@ class CourseOverview extends Component<
   };
 
   render() {
+    const canSave = this.saveButton();
     const { data, filters } = this.props.data;
     if (data) {
       return (
@@ -84,9 +60,19 @@ class CourseOverview extends Component<
             <span>{data!.name}</span>
             <BackButton />
           </span>
-          {this.saveButton()}
           <div className={classes.FilterHeadline}>:סינון סמסטרים</div>
           <Filters checked={this.checkboxHandler} />
+          {canSave ? (
+            <Button
+              onClick={() => {
+                this.props.save(this.props.data);
+                this.forceUpdate();
+              }}
+              variant="outline-light"
+            >
+              {canSave}
+            </Button>
+          ) : null}
           <div className={classes.List}>
             {data!.semesterA.length !== 0 && filters[0] ? (
               <CourseCollection str={"סמסטר א"} semester={data!.semesterA} />
