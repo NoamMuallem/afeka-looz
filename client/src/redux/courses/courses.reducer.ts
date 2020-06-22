@@ -68,7 +68,6 @@ const courseReducer = (state: State = INITIAL_STATE, action: Action) => {
         //if already in update the semester filter
         coppyMyCourses[matchIndex1] = action.payload;
       }
-      console.log("about to push this: ", coppyMyCourses);
       return {
         ...state,
         myCourses: coppyMyCourses,

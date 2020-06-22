@@ -13,7 +13,7 @@ const MySpinner: React.FC<Props> = ({ loading }) => {
     top: 35%;
     left: 50%;
     margin-left: -40px;
-    display: block;
+    display: block;z
     border-color: red;
   `;
 

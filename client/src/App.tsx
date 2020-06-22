@@ -1,5 +1,5 @@
 //basic imports
-import React from "react";
+import React, { Suspense } from "react";
 import "./App.scss";
 //router
 import { Route } from "react-router-dom";
@@ -8,9 +8,11 @@ import Header from "./components/header/header.component";
 import AddCourse from "./components/add-course/add-course.component";
 import MyCourses from "./components/my-courses/my-courses.cmponent";
 import Spinner from "./components/spinner/spinner.component";
-import CourseOverview from "./components/courseoverview/course-overview.component";
 import NotFound from "./components/not-found/not-found.component";
 import Homepage from "./components/home-page/home-page.component";
+const CourseOverview = React.lazy(() =>
+  import("./components/courseoverview/course-overview.component")
+);
 
 const App: React.SFC = () => {
   return (
@@ -20,7 +22,14 @@ const App: React.SFC = () => {
       <Route path="/" exact render={() => <Homepage />} />
       <Route path="/add" render={() => <AddCourse />} />
       <Route path="/myCourses" render={() => <MyCourses />} />
-      <Route path="/display" render={() => <CourseOverview />} />
+      <Route
+        path="/display"
+        render={() => (
+          <Suspense fallback={<div>טוען...</div>}>
+            <CourseOverview />
+          </Suspense>
+        )}
+      />
       <Route path="/error" render={() => <NotFound />} />
     </div>
   );
