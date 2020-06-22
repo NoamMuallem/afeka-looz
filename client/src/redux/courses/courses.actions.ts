@@ -41,7 +41,6 @@ export const searchCourse = (
   props: any
 ) => {
   return (dispatch: any) => {
-    console.log("entered searchCourse");
     let matchIndex = courses.findIndex(
       (course) => course.courseNumber === courseNumber
     );
@@ -53,7 +52,6 @@ export const searchCourse = (
       axios
         .get(`/courses/${courseNumber}`)
         .then((result: any) => {
-          console.log("got back: ", result);
           //if we got back an empty array , try again
           if (
             result.data.length === 0 ||
@@ -61,7 +59,7 @@ export const searchCourse = (
               result.data.semesterB.length === 0 &&
               result.data.semesterC.length === 0)
           ) {
-            dispatch(searchCourse(courseNumber, courses, props.history));
+            dispatch(searchCourse(courseNumber, courses, props));
           } else {
             let course = {
               courseNumber,
