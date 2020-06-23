@@ -77,6 +77,12 @@ export const searchCourse = (
           }
         })
         .catch((error) => {
+          let course = {
+            courseNumber,
+            filters: [false, false, false],
+            data: null,
+          };
+          dispatch(addNewCourse(course));
           dispatch(stopLoading());
           //redirect to error
           props.history.push("/error");

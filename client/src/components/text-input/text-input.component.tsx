@@ -4,6 +4,11 @@ import { searchCourse } from "../../redux/courses/courses.actions";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { Course } from "../../utils/course-interface";
+import { createStructuredSelector } from "reselect";
+import {
+  selectLoading,
+  selectMyCourses,
+} from "../../redux/courses/courses.selectors";
 
 interface Props extends RouteComponentProps {
   click: (number: string, courses: Array<Course>, ownProps: Props) => void;
@@ -40,9 +45,9 @@ const MyTextInput: React.FC<Props> = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: any) => ({
-  loading: state.courses.loading,
-  courses: state.courses.myCourses,
+const mapStateToProps = createStructuredSelector({
+  loading: selectLoading,
+  courses: selectMyCourses,
 });
 
 const mapDispatchToProps = (dispatch: any, ownProps: Props) => ({

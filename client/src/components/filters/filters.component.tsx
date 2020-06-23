@@ -3,6 +3,8 @@ import MyCheckbox from "../checkbox/checkbox.component";
 import classes from "./filters.module.scss";
 import { Course } from "../../utils/course-interface";
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { selectNewCourse } from "../../redux/courses/courses.selectors";
 
 interface Props {
   checked: (semester: number, curse: Course) => void;
@@ -35,8 +37,8 @@ const Filters: React.FC<Props> = ({ checked, course }) => {
   );
 };
 
-const mapStateToProps = (state: any) => ({
-  course: state.courses.newCourse,
+const mapStateToProps = createStructuredSelector({
+  course: selectNewCourse,
 });
 
 export default connect(mapStateToProps)(Filters);

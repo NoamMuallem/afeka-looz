@@ -2,6 +2,8 @@ import React from "react";
 import { css } from "@emotion/core";
 import HashLoader from "react-spinners/HashLoader";
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { selectLoading } from "../../redux/courses/courses.selectors";
 
 interface Props {
   loading: boolean;
@@ -22,8 +24,8 @@ const MySpinner: React.FC<Props> = ({ loading }) => {
   );
 };
 
-const mapStateToProps = (state: any) => ({
-  loading: state.courses.loading,
+const mapStateToProps = createStructuredSelector({
+  loading: selectLoading,
 });
 
 export default connect(mapStateToProps)(MySpinner);

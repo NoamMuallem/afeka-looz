@@ -1,7 +1,7 @@
 import CoursesTypes from "./courses.types";
 import { Course } from "../../utils/course-interface";
 
-interface State {
+export interface State {
   myCourses: Array<Course>;
   loading: boolean;
   newCourse: Course;

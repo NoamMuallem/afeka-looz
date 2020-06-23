@@ -8,6 +8,8 @@ import { excelBuilder } from "../../utils/excel-builder";
 import { Course } from "../../utils/course-interface";
 import { connect } from "react-redux";
 import { deleteCourse } from "../../redux/courses/courses.actions";
+import { createStructuredSelector } from "reselect";
+import { selectMyCourses } from "../../redux/courses/courses.selectors";
 
 export interface MyCoursesProps {
   courses: Array<Course>;
@@ -53,8 +55,8 @@ class MyCourses extends React.Component<MyCoursesProps> {
   }
 }
 
-const mapStateToProps = (state: any) => ({
-  courses: state.courses.myCourses,
+const mapStateToProps = createStructuredSelector({
+  courses: selectMyCourses,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

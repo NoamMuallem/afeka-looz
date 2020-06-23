@@ -10,6 +10,11 @@ import {
   updateCourse,
   checkboxNewCourse,
 } from "../../redux/courses/courses.actions";
+import { createStructuredSelector } from "reselect";
+import {
+  selectMyCourses,
+  selectNewCourse,
+} from "../../redux/courses/courses.selectors";
 
 interface CourseOverviewProps {
   //courses to see if allready exsists
@@ -92,9 +97,9 @@ class CourseOverview extends Component<CourseOverviewProps> {
   }
 }
 
-const mapStateToProps = (state: any) => ({
-  data: state.courses.newCourse,
-  courses: state.courses.myCourses,
+const mapStateToProps = createStructuredSelector({
+  data: selectNewCourse,
+  courses: selectMyCourses,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
