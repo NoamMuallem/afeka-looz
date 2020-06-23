@@ -1,5 +1,8 @@
+//basic imports
 import React from "react";
+//router
 import { Link } from "react-router-dom";
+//components
 import { Nav, Navbar } from "react-bootstrap";
 
 const Header: React.FC = () => {

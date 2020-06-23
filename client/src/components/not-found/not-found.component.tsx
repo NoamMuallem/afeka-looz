@@ -1,7 +1,13 @@
+//basic imports
 import React from "react";
 import classes from "./not-found.module.scss";
+//components
 import BackButton from "../back-button/back-button.component";
+//redux
 import { connect } from "react-redux";
+//reselect and selectors
+import { createStructuredSelector } from "reselect";
+import { selectNewCourseNumber } from "../../redux/courses/courses.selectors";
 
 interface Props {
   courseNumber: string;
@@ -19,8 +25,8 @@ const NotFound: React.FC<Props> = ({ courseNumber }) => {
   );
 };
 
-const mapStateToProps = (state: any) => ({
-  courseNumber: state.courses.newCourse.courseNumber,
+const mapStateToProps = createStructuredSelector({
+  courseNumber: selectNewCourseNumber,
 });
 
 export default connect(mapStateToProps)(NotFound);

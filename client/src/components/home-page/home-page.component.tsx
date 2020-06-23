@@ -1,5 +1,7 @@
+//basic imports
 import React from "react";
 import classes from "./home-page.module.scss";
+//components
 import FontAwesome from "react-fontawesome";
 
 const Homepage: React.FC = () => {

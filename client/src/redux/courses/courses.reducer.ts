@@ -44,7 +44,7 @@ const courseReducer = (state: State = INITIAL_STATE, action: Action) => {
     ///////////////////DELETE_COURS
     case CoursesTypes.DELETE_COURSE:
       let matchIndex2 = state.myCourses.findIndex((myCourse) => {
-        return myCourse.courseNumber === action.payload.courseNum;
+        return myCourse.courseNumber === action.payload;
       });
       let coppy = state.myCourses;
       coppy.splice(matchIndex2, 1);

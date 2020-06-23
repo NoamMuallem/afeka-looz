@@ -1,9 +1,15 @@
+//basic imports
 import React from "react";
+//components
 import { InputGroup, FormControl, Button } from "react-bootstrap";
-import { searchCourse } from "../../redux/courses/courses.actions";
-import { RouteComponentProps, withRouter } from "react-router-dom";
+//redux and actions
 import { connect } from "react-redux";
+import { searchCourse } from "../../redux/courses/courses.actions";
+//router
+import { RouteComponentProps, withRouter } from "react-router-dom";
+//interfaces
 import { Course } from "../../utils/course-interface";
+//reselect and selectors
 import { createStructuredSelector } from "reselect";
 import {
   selectLoading,

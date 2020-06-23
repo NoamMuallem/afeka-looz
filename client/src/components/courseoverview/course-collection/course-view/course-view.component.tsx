@@ -1,5 +1,7 @@
+//basic imports
 import React from "react";
 import classes from "./course-view.module.scss";
+//interfaces
 import { Option, Lecture } from "../../../../utils/course-interface";
 
 interface Props {

@@ -1,5 +1,7 @@
+//basic imports
 import React from "react";
 import classes from "./add-course.module.scss";
+//components
 import MyInput from "../text-input/text-input.component";
 
 const AddCourse: React.FC = () => {

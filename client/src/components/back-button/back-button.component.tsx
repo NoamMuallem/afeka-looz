@@ -1,7 +1,10 @@
+//basic imports
 import React from "react";
-import { withRouter, RouteComponentProps } from "react-router-dom";
+//components
 import { Button } from "react-bootstrap";
 import FontAwesome from "react-fontawesome";
+//Router
+import { withRouter, RouteComponentProps } from "react-router-dom";
 
 interface Props extends RouteComponentProps<any> {}
 

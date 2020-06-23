@@ -1,9 +1,14 @@
+//basic imports
 import React from "react";
 import classes from "./cart-course.module.scss";
-import { Button } from "react-bootstrap";
-import { Course } from "../../../utils/course-interface";
-import { connect } from "react-redux";
+//router
 import { RouteComponentProps, withRouter } from "react-router-dom";
+//components
+import { Button } from "react-bootstrap";
+//interfaces
+import { Course } from "../../../utils/course-interface";
+//redux and actions
+import { connect } from "react-redux";
 import { setNewCourse } from "../../../redux/courses/courses.actions";
 
 interface Props extends RouteComponentProps {

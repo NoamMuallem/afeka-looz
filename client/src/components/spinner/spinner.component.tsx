@@ -1,7 +1,11 @@
+//basic imports
 import React from "react";
+//components
 import { css } from "@emotion/core";
 import HashLoader from "react-spinners/HashLoader";
+//redux
 import { connect } from "react-redux";
+//reselect and selectors
 import { createStructuredSelector } from "reselect";
 import { selectLoading } from "../../redux/courses/courses.selectors";
 

@@ -17,3 +17,8 @@ export const selectLoading = createSelector(
   [selectCourses],
   (courses: State) => courses.loading
 );
+
+export const selectNewCourseNumber = createSelector(
+  [selectCourses],
+  (courses: State) => courses.newCourse.courseNumber
+);

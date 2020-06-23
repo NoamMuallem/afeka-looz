@@ -1,13 +1,18 @@
+//basic imports
 import React from "react";
 import classes from "./my-courses.module.scss";
+//components
 import CartCourse from "./cart-curse/cart-course.component";
 import { Button } from "react-bootstrap";
 //excel utils
 import { courseToJson } from "../../utils/json-data";
 import { excelBuilder } from "../../utils/excel-builder";
+//interfaces
 import { Course } from "../../utils/course-interface";
+//redux and actions
 import { connect } from "react-redux";
 import { deleteCourse } from "../../redux/courses/courses.actions";
+//reselect and selectors
 import { createStructuredSelector } from "reselect";
 import { selectMyCourses } from "../../redux/courses/courses.selectors";
 

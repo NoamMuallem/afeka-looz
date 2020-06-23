@@ -1,15 +1,17 @@
+//refular imports
 import React, { Component } from "react";
-import CourseCollection from "./course-collection/course-collection.component";
 import classes from "./course-overview.module.scss";
+//needed components
+import CourseCollection from "./course-collection/course-collection.component";
 import Filters from "../filters/filters.component";
 import { Button } from "react-bootstrap";
 import BackButton from "../back-button/back-button.component";
+//interfaces
 import { Course } from "../../utils/course-interface";
+//redux
 import { connect } from "react-redux";
-import {
-  updateCourse,
-  checkboxNewCourse,
-} from "../../redux/courses/courses.actions";
+import { updateCourse } from "../../redux/courses/courses.actions";
+//reselect and selectors
 import { createStructuredSelector } from "reselect";
 import {
   selectMyCourses,
@@ -23,16 +25,17 @@ interface CourseOverviewProps {
   data: Course;
   //save the changes to that course in the state
   save: (course: Course) => void;
-  //for checkbox handling
-  checkbox: (fiter: number, course: Course) => void;
 }
 
 class CourseOverview extends Component<CourseOverviewProps> {
+  //check if there is a change and display text on button accordingly
+  //(diffrent if new course or change in exsisting course)
   saveButton = () => {
     //look for new course in myCourses
     const matchIndex = this.props.courses.findIndex(
       (course) => course.courseNumber === this.props.data.courseNumber
     );
+    let text = null;
     if (matchIndex !== -1) {
       if (
         this.props.courses[matchIndex].filters[0] !==
@@ -41,23 +44,45 @@ class CourseOverview extends Component<CourseOverviewProps> {
           this.props.data.filters[1] ||
         this.props.courses[matchIndex].filters[2] !== this.props.data.filters[2]
       ) {
-        return "שמור שינויים";
-      } else {
-        return null;
+        text = "שמור שינויים";
       }
     } else {
-      return "הוסף לקורסים שלי";
+      text = "הוסף לקורסים שלי";
     }
+    return text ? (
+      <Button
+        onClick={() => {
+          this.props.save(this.props.data);
+          this.forceUpdate();
+        }}
+        variant="outline-light"
+      >
+        {text}
+      </Button>
+    ) : null;
   };
 
-  checkboxHandler = (filter: number, course: Course) => {
-    this.props.checkbox(filter, course);
-    this.forceUpdate();
+  //lists the semester and the courses in them
+  semesterLists = () => {
+    //we checked if data is null and it is not!
+    const { data, filters } = this.props.data;
+    return (
+      <div className={classes.List}>
+        {data!.semesterA.length !== 0 && filters[0] ? (
+          <CourseCollection str={"סמסטר א"} semester={data!.semesterA} />
+        ) : null}
+        {data!.semesterB.length !== 0 && filters[1] ? (
+          <CourseCollection str={"סמסטר ב"} semester={data!.semesterB} />
+        ) : null}
+        {data!.semesterC.length !== 0 && filters[2] ? (
+          <CourseCollection str={"סמסטר קיץ"} semester={data!.semesterC} />
+        ) : null}
+      </div>
+    );
   };
 
   render() {
-    const canSave = this.saveButton();
-    const { data, filters } = this.props.data;
+    const { data } = this.props.data;
     if (data) {
       return (
         <div>
@@ -65,30 +90,9 @@ class CourseOverview extends Component<CourseOverviewProps> {
             <span>{data!.name}</span>
             <BackButton />
           </span>
-          <div className={classes.FilterHeadline}>:סינון סמסטרים</div>
-          <Filters checked={this.checkboxHandler} />
-          {canSave ? (
-            <Button
-              onClick={() => {
-                this.props.save(this.props.data);
-                this.forceUpdate();
-              }}
-              variant="outline-light"
-            >
-              {canSave}
-            </Button>
-          ) : null}
-          <div className={classes.List}>
-            {data!.semesterA.length !== 0 && filters[0] ? (
-              <CourseCollection str={"סמסטר א"} semester={data!.semesterA} />
-            ) : null}
-            {data!.semesterB.length !== 0 && filters[1] ? (
-              <CourseCollection str={"סמסטר ב"} semester={data!.semesterB} />
-            ) : null}
-            {data!.semesterC.length !== 0 && filters[2] ? (
-              <CourseCollection str={"סמסטר קיץ"} semester={data!.semesterC} />
-            ) : null}
-          </div>
+          <Filters />
+          {this.saveButton()}
+          {this.semesterLists()}
         </div>
       );
     } else {
@@ -104,7 +108,6 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = (dispatch: any) => ({
   save: (course: Course) => dispatch(updateCourse(course)),
-  checkbox: (filter: number) => dispatch(checkboxNewCourse(filter)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CourseOverview);
