@@ -7,7 +7,7 @@ import HashLoader from "react-spinners/HashLoader";
 import { connect } from "react-redux";
 //reselect and selectors
 import { createStructuredSelector } from "reselect";
-import { selectLoading } from "../../redux/courses/courses.selectors";
+import { selectLoading } from "../../redux/ui/ui.selectors";
 
 interface Props {
   loading: boolean;

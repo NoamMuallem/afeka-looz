@@ -3,7 +3,6 @@ import { Course } from "../../utils/course-interface";
 
 export interface State {
   myCourses: Array<Course>;
-  loading: boolean;
   newCourse: Course;
 }
 
@@ -14,7 +13,6 @@ interface Action {
 
 const INITIAL_STATE = {
   myCourses: [],
-  loading: false,
   newCourse: {
     courseNumber: "",
     filters: [true, true, true],
@@ -87,20 +85,6 @@ const courseReducer = (state: State = INITIAL_STATE, action: Action) => {
       return {
         ...state,
         newCourse: coppy1,
-      };
-
-    ////////////////////SET_LOADING
-    case CoursesTypes.SET_LOADING:
-      return {
-        ...state,
-        loading: true,
-      };
-
-    ////////////STOP_LOADING
-    case CoursesTypes.STOP_LOADING:
-      return {
-        ...state,
-        loading: false,
       };
 
     default:

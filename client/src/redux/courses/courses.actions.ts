@@ -1,4 +1,5 @@
 import CoursesTypes from "./courses.types";
+import { setLoading, stopLoading } from "../ui/ui.actions";
 import { Course } from "../../utils/course-interface";
 import axios from "axios";
 
@@ -15,14 +16,6 @@ export const setNewCourse = (courseNumber: string) => ({
 export const deleteCourse = (courseNumber: string) => ({
   type: CoursesTypes.DELETE_COURSE,
   payload: courseNumber,
-});
-
-export const setLoading = () => ({
-  type: CoursesTypes.SET_LOADING,
-});
-
-export const stopLoading = () => ({
-  type: CoursesTypes.STOP_LOADING,
 });
 
 export const addNewCourse = (course: Course) => ({

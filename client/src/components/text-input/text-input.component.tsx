@@ -11,10 +11,8 @@ import { RouteComponentProps, withRouter } from "react-router-dom";
 import { Course } from "../../utils/course-interface";
 //reselect and selectors
 import { createStructuredSelector } from "reselect";
-import {
-  selectLoading,
-  selectMyCourses,
-} from "../../redux/courses/courses.selectors";
+import { selectMyCourses } from "../../redux/courses/courses.selectors";
+import { selectLoading } from "../../redux/ui/ui.selectors";
 
 interface Props extends RouteComponentProps {
   click: (number: string, courses: Array<Course>, ownProps: Props) => void;
