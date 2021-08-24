@@ -26,7 +26,7 @@ const scrape = async (courseNumber) => {
   //waite for the page to load is does not load reaturn empty lectures
   await page
     .waitForXPath(
-      "/html/body/main/div[4]/div[2]/div/div/form/table/tbody/tr[1]/td/h1",
+      "/html/body/main/div[4]/div/div/div/form/table/tbody/tr[1]/td/h1",
       { timeout: 8000 }
     )
     .then(async () => {
